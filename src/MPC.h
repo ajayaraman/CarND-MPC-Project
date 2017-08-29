@@ -14,7 +14,12 @@ class MPC {
 
   // Solve the model given an initial state and polynomial coefficients.
   // Return the first actuatotions.
-  vector<double> Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs);
+  vector<double> Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs);                                    
 };
+
+// For converting back and forth between radians and degrees.
+constexpr double pi() { return M_PI; }
+extern double deg2rad(double x);
+extern double rad2deg(double x);
 
 #endif /* MPC_H */
