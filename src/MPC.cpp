@@ -5,7 +5,7 @@
 
 using CppAD::AD;
 
-// TODO: Set the timestep length and duration
+// Set the timestep length and duration
 size_t N = 20;
 double dt = 0.1;
 
@@ -24,7 +24,8 @@ double rad2deg(double x) { return x * 180 / pi(); }
 // This is the length from front to CoG that has a similar radius.
 const double Lf = 2.67;
 
-const double ref_v = 70;
+// This reference velocity is the highest I could go without the controller becoming unstable
+const double ref_v = 50;
 
 // The solver takes all the state variables and actuator
 // variables in a singular vector. Thus, we should to establish
