@@ -125,17 +125,17 @@ int main() {
 
           //Predict using kinematics where the vehicle will be if the current steering controls are applied
           double latency = 0.1; //100 ms
-          state(0) += v * cos(state(2)) * latency; //x
-          state(1) += v * sin(state(2)) * latency; //y
-          state(2) += -v * delta / Lf * latency;    //psi
+          state(0) += state(3) * cos(state(2)) * latency; //x
+          state(1) += state(3) * sin(state(2)) * latency; //y
+          state(2) += -state(3) * delta / Lf * latency;    //psi
           state(3) += acceleration * latency;      //v
-          state(4) += v * sin(epsi) * latency;     //cte
-          state(5) += -v * delta / Lf * latency;    //epsi
+          state(4) += state(3) * sin(state(5)) * latency;     //cte
+          state(5) += -state(3) * delta / Lf * latency;    //epsi
 
           //Solve for optimal controls
           auto vars = mpc.Solve(state, coeffs);
 
-          double steer_value = vars[0] / (deg2rad(25) * Lf);
+          double steer_value = vars[0] / deg2rad(25);
           double throttle_value = vars[1];
 
           json msgJson;
@@ -172,9 +172,9 @@ int main() {
           vector<double> next_x_vals;
           vector<double> next_y_vals;
 
-          //In 2 m increments, we plot 30 points
-          double xinc = 2;
-          const int nPts = 30;
+          //In 2 m increments, we plot 25 points
+          double xinc = 2.5;
+          const int nPts = 25;
           for(int i = 0; i < nPts; i++)
           {
             double x = xinc * i;
